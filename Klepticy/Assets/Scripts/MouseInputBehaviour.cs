@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ public class MouseInputBehaviour : MonoBehaviour
     public List<GameObject> prefabs = new List<GameObject>();
 
     static System.Random random = new System.Random();
+
+    int counter = 0;
 
     // Use this for initialization
     void Start ()
@@ -23,7 +26,13 @@ public class MouseInputBehaviour : MonoBehaviour
             GameObject prefab = prefabs[random.Next(prefabs.Count)];
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = -10;
-            Instantiate(prefab, mousePos, Quaternion.identity);
+            GameObject go = Instantiate(prefab, mousePos, Quaternion.identity);
+            counter++;
+            if (counter == 10)
+            {
+                counter = 0;
+                PunPrinter.PrintPun(Int32.Parse(go.name.Split('_')[0]));
+            }
         }
     }
 }

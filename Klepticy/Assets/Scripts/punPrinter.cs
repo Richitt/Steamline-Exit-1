@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class punPrinter : MonoBehaviour {
+public class PunPrinter : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -10,7 +10,7 @@ public class punPrinter : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void printPun (int num) {
+	public static void PrintPun (int num) {
         //accepts the corresponding number for the object dropped and DisplayDialogues a pun
         switch (num)
         {

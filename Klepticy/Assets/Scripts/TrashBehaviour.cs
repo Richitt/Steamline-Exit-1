@@ -21,9 +21,15 @@ public class TrashBehaviour : MonoBehaviour
 
     public bool landed = false;
 
+
+    int num = 0;
+    static int id = 0;
+
     // Use this for initialization
     void Start ()
     {
+        num = id;
+        id++;
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (colorType == ColorType.None)
         {
@@ -113,13 +119,16 @@ public class TrashBehaviour : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        GameObject gameObject = collision.collider.gameObject;
         if (gameObject.tag == "Trash")
         {
             TrashBehaviour trash = gameObject.GetComponent<TrashBehaviour>();
             // add to adjacency matrix if it's the same color and it entered collision
             if (trash.colorType == colorType && landed)
             {
+                Debug.Log("collision: added " + num + " and " + trash.num);
                 adj[trash] = true;
+                trash.adj[this] = true;
             }
         }
     }
@@ -133,7 +142,9 @@ public class TrashBehaviour : MonoBehaviour
             TrashBehaviour trash = gameObject.GetComponent<TrashBehaviour>();
             if (trash.colorType == colorType && landed)
             {
+                Debug.Log("uncollision: removed " + num + " and " + trash.num);
                 adj[trash] = false;
+                trash.adj[this] = false;
             }
         }
     }

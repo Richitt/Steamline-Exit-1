@@ -23,7 +23,9 @@ public class MouseInputBehaviour : MonoBehaviour
         // create a square on click
         if (Input.GetMouseButtonDown(0))
         {
-            GameObject prefab = prefabs[random.Next(prefabs.Count)];
+            int n = random.Next(prefabs.Count);
+            n = 1;
+            GameObject prefab = prefabs[n];
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = -10;
             GameObject go = Instantiate(prefab, mousePos, Quaternion.identity);

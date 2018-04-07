@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CameraBehaviour : MonoBehaviour {
 
-    public GameObject follow;
+    public GameObject line;
+
     float ySpeed = 0;
     public List<GameObject> walls = new List<GameObject>();
 
@@ -19,6 +20,28 @@ public class CameraBehaviour : MonoBehaviour {
     {
         MoveCameraSmooth();
         UpdateWalls();
+        TrackHighest();
+    }
+
+    // track the highest object
+    private void TrackHighest()
+    {
+        // track the highest
+        float maxYPos = -100;
+        foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Trash"))
+        {
+            TrashBehaviour trash = gameObject.GetComponent<TrashBehaviour>();
+            if (trash.landed)
+            {
+                Bounds bounds = gameObject.GetComponent<Collider2D>().bounds;
+                float yPos = (bounds.center + bounds.extents).y;
+                if (maxYPos < yPos)
+                {
+                    maxYPos = yPos;
+                }
+            }
+        }
+        line.transform.position = new Vector3(line.transform.position.x, maxYPos, line.transform.position.z);
     }
 
     // if the camera bounds exceed the walls
@@ -61,7 +84,7 @@ public class CameraBehaviour : MonoBehaviour {
         // to smooth the following, use a differential equation
         // where acceleration makes spd approach targetSpd = k1 * distanceToTravel
         // acceleration is k2 * spdDifference
-        float targetPos = Mathf.Max(0, follow.transform.position.y);
+        float targetPos = Mathf.Max(0, line.transform.position.y);
         float currentPos = transform.position.y;
         float k1 = 0.1f;
         float targetSpd = k1 * (targetPos - currentPos);

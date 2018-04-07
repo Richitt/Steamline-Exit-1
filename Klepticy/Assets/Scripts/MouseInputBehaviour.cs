@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class MouseInputBehaviour : MonoBehaviour
 {
-    public GameObject prefab;
-    public GameObject line;
+    public List<GameObject> prefabs = new List<GameObject>();
 
-	// Use this for initialization
-	void Start ()
+    static System.Random random = new System.Random();
+
+    // Use this for initialization
+    void Start ()
     {
 		
 	}
@@ -19,25 +20,10 @@ public class MouseInputBehaviour : MonoBehaviour
         // create a square on click
         if (Input.GetMouseButtonDown(0))
         {
+            GameObject prefab = prefabs[random.Next(prefabs.Count)];
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
             Instantiate(prefab, mousePos, Quaternion.identity);
         }
-        // track the highest
-        float maxYPos = -100;
-        foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Trash"))
-        {
-            TrashBehaviour trash = gameObject.GetComponent<TrashBehaviour>();
-            if (trash.landed)
-            {
-                Bounds bounds = gameObject.GetComponent<BoxCollider2D>().bounds;
-                float yPos = (bounds.center + bounds.extents).y;
-                if (maxYPos < yPos)
-                {
-                    maxYPos = yPos;
-                }
-            }
-        }
-        line.transform.position = new Vector3(line.transform.position.x, maxYPos, line.transform.position.z);
     }
 }

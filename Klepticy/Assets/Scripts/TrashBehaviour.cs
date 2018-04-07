@@ -7,14 +7,14 @@ public class TrashBehaviour : MonoBehaviour
 {
     public enum ColorType
     {
-        Orange, Blue, Purple, Red, Green, Yellow
+        None, Orange, Blue, Purple, Red, Green, Yellow
     }
 
     static Array values = Enum.GetValues(typeof(ColorType));
     static System.Random random = new System.Random();
 
     SpriteRenderer spriteRenderer;
-    ColorType colorType;
+    public ColorType colorType = ColorType.None;
 
     // adjacency list of all collisions of same color
     Dictionary<TrashBehaviour, bool> adj = new Dictionary<TrashBehaviour, bool>();
@@ -25,27 +25,30 @@ public class TrashBehaviour : MonoBehaviour
     void Start ()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        colorType = (ColorType)values.GetValue(random.Next(values.Length));
-        switch (colorType)
+        if (colorType == ColorType.None)
         {
-            case ColorType.Orange:
-                spriteRenderer.color = new Color(1, 0.65f, 0);
-                break;
-            case ColorType.Blue:
-                spriteRenderer.color = Color.blue;
-                break;
-            case ColorType.Purple:
-                spriteRenderer.color = Color.magenta;
-                break;
-            case ColorType.Red:
-                spriteRenderer.color = Color.red;
-                break;
-            case ColorType.Green:
-                spriteRenderer.color = Color.green;
-                break;
-            case ColorType.Yellow:
-                spriteRenderer.color = Color.yellow;
-                break;
+            colorType = (ColorType)values.GetValue(random.Next(values.Length - 1) + 1);
+            switch (colorType)
+            {
+                case ColorType.Orange:
+                    spriteRenderer.color = new Color(1, 0.65f, 0);
+                    break;
+                case ColorType.Blue:
+                    spriteRenderer.color = Color.blue;
+                    break;
+                case ColorType.Purple:
+                    spriteRenderer.color = Color.magenta;
+                    break;
+                case ColorType.Red:
+                    spriteRenderer.color = Color.red;
+                    break;
+                case ColorType.Green:
+                    spriteRenderer.color = Color.green;
+                    break;
+                case ColorType.Yellow:
+                    spriteRenderer.color = Color.yellow;
+                    break;
+            }
         }
     }
 

@@ -1,15 +1,40 @@
-1|O|I'll reach the top in no time! I've gotta keep this can-do attitude!
-2|B|Lemme just turn this table to fit better.
-3|P|It's bin nice using this to build my tower.
-4|R|Oh! This trash really takes the cake!
-5|G|This is the perfect piece to get me out of this jam!
-6|Y|I find this piece of trash the most a-peel-ing!
-7|O|I'd make acorn-y pun but you wouldn't want to hear it.
-8|B|What is this? How are you supposed to stack these things?
-9|P|Oh... I guess anything helps but that's so small.
-10|R|It's a-boat time I got myself one of these!
-11|G|Who's birthday is it today? I guess I'll just keep this to myself!
-12|Y|A stuffed puppy! I'm a bit of a retriever myself!
-13|O|I soap there's something good at the end of this.
-14|B|A fatherly figureine!
-15|P|It condo looks like someone's home.
+1|I'll reach the top in no time! I've gotta keep this can-do attitude!
+2|Lemme just turn this table to fit better.
+3|It's bin nice using this to build my tower.
+4|Oh! This trash really takes the cake!
+5|This is the perfect piece to get me out of this jam!
+6|I find this piece of trash the most a-peel-ing!
+7|I'd make acorn-y pun but you wouldn't want to hear it.
+8|What is this? How are you supposed to stack these things?
+9|Oh... I guess anything helps but that's so small.
+10|It's a-boat time I got myself one of these!
+11|Who's birthday is it today? I guess I'll just keep this to myself!
+12|A stuffed puppy! I'm a bit of a retriever myself!
+13|I soap there's something good at the end of this.
+14|A fatherly figureine!
+15|It condo looks like someone's home.
+16|I don't know what this is. It's tough to behold.
+17|Looks like something you'd find in a landfill.
+18|The future is looking bright!
+19|A coat almost as beautiful as mine.
+20|I've gotta give credit to the folks who threw this out!
+21|I almost brushed past this useful item.
+22|Be sure not to stack four items of the same color, otherwise we'll take a plunge.
+23|Bear with me, I think we could use this!
+24|I think we're almost pasta point of no return.
+25|Your building methods are kinda sketch.
+26|This piece of junk tickles my fancy.
+27|Looks like something's wrrong with this cat.
+28|This really lights up the place!
+29|A game? Why would someone throw this away?
+30|What a rice little piece to add to my collection
+31|Is it a bit cheesy to hoard these?
+32|Is it a unicorn horn?
+33|My hat's off to ya for making it this far!
+34|This box doesn't look very stable.
+35|What are these things?
+36|What a strange looking set of blocks.
+37|A pony! It sounds a little horse.
+38|There ain't muffin holding us back now!
+39|You don't have to hammer it in that we're taking a while to get out of here!
+40|A cat octopus? Meow I've seen it all!

@@ -5,6 +5,7 @@ using UnityEngine;
 public class MouseInputBehaviour : MonoBehaviour
 {
     public GameObject prefab;
+    public GameObject line;
 
 	// Use this for initialization
 	void Start ()
@@ -23,18 +24,20 @@ public class MouseInputBehaviour : MonoBehaviour
             Instantiate(prefab, mousePos, Quaternion.identity);
         }
         // track the highest
-        float time = Time.realtimeSinceStartup;
-        float maxYPos = float.MinValue;
+        float maxYPos = -100;
         foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Trash"))
         {
-            Bounds bounds = gameObject.GetComponent<BoxCollider2D>().bounds;
-            float yPos = (bounds.center - bounds.extents).y;
-            if (maxYPos < yPos)
+            TrashBehaviour trash = gameObject.GetComponent<TrashBehaviour>();
+            if (trash.landed)
             {
-                maxYPos = yPos;
+                Bounds bounds = gameObject.GetComponent<BoxCollider2D>().bounds;
+                float yPos = (bounds.center + bounds.extents).y;
+                if (maxYPos < yPos)
+                {
+                    maxYPos = yPos;
+                }
             }
         }
-        float total = Time.realtimeSinceStartup - time;
-        Debug.Log(maxYPos + " " + total);
+        line.transform.position = new Vector3(line.transform.position.x, maxYPos, line.transform.position.z);
     }
 }

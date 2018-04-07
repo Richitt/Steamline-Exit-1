@@ -21,15 +21,9 @@ public class TrashBehaviour : MonoBehaviour
 
     public bool landed = false;
 
-
-    int num = 0;
-    static int id = 0;
-
     // Use this for initialization
     void Start ()
     {
-        num = id;
-        id++;
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (colorType == ColorType.None)
         {

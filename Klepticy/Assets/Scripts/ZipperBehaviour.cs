@@ -25,7 +25,7 @@ public class ZipperBehaviour : MonoBehaviour
         }
         AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
         // stay in idle if idle
-        if (state.IsName("Base.ZipperClimb"))
+        if (!state.IsName("Base.ZipperIdle"))
         {
             // move racoon toward new position
             transform.position = Vector3.MoveTowards(transform.position, CameraBehaviour.zipperTarget, spd);

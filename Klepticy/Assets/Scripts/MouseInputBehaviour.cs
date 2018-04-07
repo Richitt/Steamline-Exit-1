@@ -24,7 +24,6 @@ public class MouseInputBehaviour : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             int n = random.Next(prefabs.Count);
-            n = 1;
             GameObject prefab = prefabs[n];
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = -10;

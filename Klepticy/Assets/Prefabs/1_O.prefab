@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4258548917642270}
   - component: {fileID: 212532504506645816}
   - component: {fileID: 50946884627427450}
-  - component: {fileID: 61445403092425918}
   - component: {fileID: 114027525031368008}
+  - component: {fileID: 60965957107403404}
   m_Layer: 0
   m_Name: 1_O
   m_TagString: Trash
@@ -37,8 +37,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1340418203687046}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.09768951, y: 1.4673517, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.253, y: 1.032, z: -10}
+  m_LocalScale: {x: 0.45, y: 0.57, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -63,8 +63,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &61445403092425918
-BoxCollider2D:
+--- !u!60 &60965957107403404
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -80,14 +80,22 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.45, y: 0.57}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 2.5571783, y: 2.5291932}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.87076515, y: 0.8773578}
+      - {x: 0.2828832, y: 1.0640655}
+      - {x: 0.02149549, y: 1.0730089}
+      - {x: -0.16244544, y: 0.98673505}
+      - {x: -1.2001576, y: -0.48251715}
+      - {x: -0.74310136, y: -1.001085}
+      - {x: 0.15383184, y: -1.1255565}
+      - {x: 0.6979922, y: -0.45139527}
+      - {x: 1.3812028, y: 0.5254327}
 --- !u!114 &114027525031368008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -140,7 +148,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.5571783, y: 2.5291932}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

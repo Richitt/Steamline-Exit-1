@@ -22,7 +22,7 @@ public class MouseInputBehaviour : MonoBehaviour
         {
             GameObject prefab = prefabs[random.Next(prefabs.Count)];
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z = 0;
+            mousePos.z = -10;
             Instantiate(prefab, mousePos, Quaternion.identity);
         }
     }

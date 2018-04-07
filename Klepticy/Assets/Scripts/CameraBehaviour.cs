@@ -9,6 +9,8 @@ public class CameraBehaviour : MonoBehaviour {
     float ySpeed = 0;
     public List<GameObject> walls = new List<GameObject>();
 
+    public static Vector3 zipperTarget;
+
     // Use this for initialization
     void Start ()
     {
@@ -33,11 +35,27 @@ public class CameraBehaviour : MonoBehaviour {
             TrashBehaviour trash = gameObject.GetComponent<TrashBehaviour>();
             if (trash.landed)
             {
-                Bounds bounds = gameObject.GetComponent<Collider2D>().bounds;
+                Collider2D trashCollider = gameObject.GetComponent<Collider2D>();
+                Bounds bounds = trashCollider.bounds;
                 float yPos = (bounds.center + bounds.extents).y;
                 if (maxYPos < yPos)
                 {
                     maxYPos = yPos;
+                    // if it's the highest so far, find x and y
+                    PolygonCollider2D polygon = trashCollider as PolygonCollider2D;
+                    if (polygon != null)
+                    {
+                        foreach (Vector3 localPoint in polygon.points)
+                        {
+                            Vector3 point = polygon.transform.TransformPoint(localPoint);
+                            // if you find the highest y position, then save its x position also
+                            if (Mathf.Abs(point.y - maxYPos) <= 0.001)
+                            {
+                                zipperTarget = point;
+                                zipperTarget.z = -10;
+                            }
+                        }
+                    }
                 }
             }
         }

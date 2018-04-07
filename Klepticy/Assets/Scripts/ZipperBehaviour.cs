@@ -8,7 +8,7 @@ public class ZipperBehaviour : MonoBehaviour
     Animator animator;
 
     float spd = 0.1f;
-    float stationarySpd = 0.01f;
+    float stationarySpd = 0.05f;
 
     // Use this for initialization
     void Start ()
@@ -19,6 +19,10 @@ public class ZipperBehaviour : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        if (CameraBehaviour.zipperTarget.y < -10 || CameraBehaviour.zipperTarget == Vector3.zero)
+        {
+            return;
+        }
         AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
         // stay in idle if idle
         if (state.IsName("Base.ZipperClimb"))

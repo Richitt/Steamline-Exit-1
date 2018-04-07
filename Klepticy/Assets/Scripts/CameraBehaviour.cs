@@ -9,7 +9,7 @@ public class CameraBehaviour : MonoBehaviour {
     float ySpeed = 0;
     public List<GameObject> walls = new List<GameObject>();
 
-    public static Vector3 zipperTarget;
+    public static Vector3 zipperTarget = Vector3.zero;
 
     // Use this for initialization
     void Start ()

@@ -126,7 +126,6 @@ public class TrashBehaviour : MonoBehaviour
             // add to adjacency matrix if it's the same color and it entered collision
             if (trash.colorType == colorType && landed)
             {
-                Debug.Log("collision: added " + num + " and " + trash.num);
                 adj[trash] = true;
                 trash.adj[this] = true;
             }
@@ -142,7 +141,6 @@ public class TrashBehaviour : MonoBehaviour
             TrashBehaviour trash = gameObject.GetComponent<TrashBehaviour>();
             if (trash.colorType == colorType && landed)
             {
-                Debug.Log("uncollision: removed " + num + " and " + trash.num);
                 adj[trash] = false;
                 trash.adj[this] = false;
             }

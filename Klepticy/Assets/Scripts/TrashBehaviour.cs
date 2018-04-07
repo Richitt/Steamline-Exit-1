@@ -89,10 +89,9 @@ public class TrashBehaviour : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionStay2D(Collision2D collision)
     {
         GameObject gameObject = collision.collider.gameObject;
-
         if (gameObject.tag == "Trash")
         {
             TrashBehaviour trash = gameObject.GetComponent<TrashBehaviour>();
@@ -107,7 +106,10 @@ public class TrashBehaviour : MonoBehaviour
         {
             landed = true;
         }
+    }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
         if (gameObject.tag == "Trash")
         {
             TrashBehaviour trash = gameObject.GetComponent<TrashBehaviour>();

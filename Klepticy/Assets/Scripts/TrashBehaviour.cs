@@ -14,6 +14,7 @@ public class TrashBehaviour : MonoBehaviour
     static System.Random random = new System.Random();
 
     SpriteRenderer spriteRenderer;
+    Rigidbody2D rigidBody2D;
     public ColorType colorType = ColorType.None;
 
     // adjacency list of all collisions of same color
@@ -25,6 +26,7 @@ public class TrashBehaviour : MonoBehaviour
     void Start ()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        rigidBody2D = GetComponent<Rigidbody2D>();
         if (colorType == ColorType.None)
         {
             colorType = (ColorType)values.GetValue(random.Next(values.Length - 1) + 1);
@@ -55,6 +57,31 @@ public class TrashBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // set as kinematic if offscreen
+        float kinematicY = Camera.main.ScreenToWorldPoint(Vector3.zero).y - 4f;
+        if (transform.position.y < kinematicY)
+        {
+            if (!rigidBody2D.isKinematic)
+            {
+                rigidBody2D.isKinematic = true;
+                rigidBody2D.velocity = Vector2.zero;
+                rigidBody2D.angularVelocity = 0.0f;
+                rigidBody2D.Sleep();
+            }
+        }
+        // if visible, un-kinematic it
+        else
+        {
+            if (rigidBody2D.isKinematic)
+            {
+                rigidBody2D.isKinematic = false;
+            }
+        }
+        // do nothing if kinematic
+        if (rigidBody2D.isKinematic || rigidBody2D.IsSleeping())
+        {
+            return;
+        }
         // since this is called after OnCollisionEnter/OnCollisionExit,
         // breadth first search to try to destroy objects
         Dictionary<TrashBehaviour, bool> traversed = new Dictionary<TrashBehaviour, bool>();

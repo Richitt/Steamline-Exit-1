@@ -11,7 +11,7 @@ public class CameraBehaviour : MonoBehaviour {
 
     public static Vector3 zipperTarget = Vector3.zero;
 
-    List<Checkpoint> checkpoints;
+    List<Checkpoint> checkpoints = new List<Checkpoint>();
 
     // Use this for initialization
     void Start ()

@@ -18,11 +18,12 @@ public class CameraBehaviour : MonoBehaviour {
     {
         checkpoints = new List<Checkpoint>()
         {
-            new Checkpoint(5, "what1"),
-            new Checkpoint(14, "what2"),
-            new Checkpoint(23, "what3"),
-            new Checkpoint(32, "what4"),
-            new Checkpoint(41, "what5"),
+            new Checkpoint(-4, "This place really isn't up my alley, let's get out of here!"),
+            new Checkpoint(5, "Up and up!"),
+            new Checkpoint(14, "Look at all this glorious trash!"),
+            new Checkpoint(23, "I can almost see the sun!"),
+            new Checkpoint(32, "I'm flying!"),
+            new Checkpoint(41, "Thanks for playing! This is the end of the Madhacks Demo!"),
         };
     }
 

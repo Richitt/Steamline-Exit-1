@@ -239,6 +239,16 @@ MonoBehaviour:
   - {fileID: 1665243348446438, guid: 9e7249804ff3391448f317ada51887ef, type: 2}
   - {fileID: 1768003919845980, guid: 02701b17b7dd58244897d0def929dae4, type: 2}
   - {fileID: 1699413287954440, guid: 7f1195d2d4eaed44491e776762a69f39, type: 2}
+  - {fileID: 1311157732442880, guid: 377d975e898b7e946991a1c335f8a1d9, type: 2}
+  - {fileID: 1733789330826916, guid: a2cd287535e1d854090edb761ffed459, type: 2}
+  - {fileID: 1766544159734586, guid: 91b4da1b0f975c3428975fd4f5cfece0, type: 2}
+  - {fileID: 1732801870965988, guid: fc7461bf6df21ad4296c699a8945e46e, type: 2}
+  - {fileID: 1944951388500804, guid: 2f793925c4a24374ab10ef841b10705c, type: 2}
+  - {fileID: 1660527710215360, guid: e9a896772d2ac054e9918d55f6934ec0, type: 2}
+  - {fileID: 1635203887215358, guid: 9f76303f52d37474192d0149baba8d4a, type: 2}
+  - {fileID: 1338798195561268, guid: cf0c00c7c6f04574796bb63ba599a69a, type: 2}
+  - {fileID: 1218463082807852, guid: d14884c6c97fecd4f940e1289ab7003e, type: 2}
+  - {fileID: 1775445199008212, guid: d169042ac3f5b674992aeab372edf958, type: 2}
 --- !u!1001 &204362962
 Prefab:
   m_ObjectHideFlags: 0
@@ -462,7 +472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9312135, g: 0.82298875, b: 0.9485294, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -842,7 +852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.20765863, g: 0.120350346, b: 0.3897059, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

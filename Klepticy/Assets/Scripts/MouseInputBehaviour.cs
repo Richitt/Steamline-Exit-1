@@ -27,12 +27,15 @@ public class MouseInputBehaviour : MonoBehaviour
             GameObject prefab = prefabs[n];
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = -10;
-            GameObject go = Instantiate(prefab, mousePos, Quaternion.identity);
-            counter++;
-            if (counter == 10)
+            if (Physics2D.OverlapCircle(mousePos, 0.001f) == null)
             {
-                counter = 0;
-                PunPrinter.PrintPun(Int32.Parse(go.name.Split('_')[0]));
+                GameObject go = Instantiate(prefab, mousePos, Quaternion.identity);
+                counter++;
+                if (counter == 10)
+                {
+                    counter = 0;
+                    PunPrinter.PrintPun(Int32.Parse(go.name.Split('_')[0]));
+                }
             }
         }
     }

@@ -13,11 +13,11 @@ public class UIBehavior : MonoBehaviour
     public GameObject text;
 
     private CanvasGroup canvasGroup;
-    float fadeTimer = 0f;
-    float fadeDuration = 0.3f;
+    static float fadeTimer = 0f;
+    static float fadeDuration = 0.3f;
 
-    float holdTimer = 0f;
-    float holdDuration = 5f;
+    static float holdTimer = 0f;
+    static float holdDuration = 5f;
 
     private enum State
     {
@@ -31,6 +31,10 @@ public class UIBehavior : MonoBehaviour
         if (state != State.OPEN)
         {
             state = State.OPENING;
+        }
+        else
+        {
+            holdTimer = 0f;
         }
     }
 

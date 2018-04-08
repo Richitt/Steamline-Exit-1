@@ -11,18 +11,64 @@ public class CameraBehaviour : MonoBehaviour {
 
     public static Vector3 zipperTarget = Vector3.zero;
 
+    List<Checkpoint> checkpoints;
+
     // Use this for initialization
     void Start ()
     {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
+        checkpoints = new List<Checkpoint>()
+        {
+            new Checkpoint(5, "what1"),
+            new Checkpoint(14, "what2"),
+            new Checkpoint(23, "what3"),
+            new Checkpoint(32, "what4"),
+            new Checkpoint(41, "what5"),
+        };
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
         MoveCameraSmooth();
         UpdateWalls();
         TrackHighest();
+        HandleCheckpoints();
+    }
+
+    // say dialogue every x distance up
+    private void HandleCheckpoints()
+    {
+        GameObject zipper = GameObject.FindGameObjectWithTag("Player");
+        for (int i = 0; i < checkpoints.Count; i++)
+        {
+            // for every checkpoint
+            // display the checkpoint's dialogue if you haven't seen it and dialogue is free.
+            if (zipper.transform.position.y >= checkpoints[i].height && !checkpoints[i].activated)
+            {
+                if (!UIBehavior.CheckDialogue())
+                {
+                    UIBehavior.DisplayDialogue(checkpoints[i].display);
+                    checkpoints.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
+    }
+
+    // it's called a checkpoint, but there are none.
+    // you just get a little bit of dialogue instead.
+    // have fun talking to a raccoon you silly little gray frienderino.
+    struct Checkpoint
+    {
+        public int height;
+        public string display;
+        public bool activated;
+        public Checkpoint(int height, string display)
+        {
+            this.height = height;
+            this.display = display;
+            activated = false;
+        }
     }
 
     // track the highest object

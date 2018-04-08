@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ZipperBehaviour : MonoBehaviour
 {
-
     Animator animator;
 
     float spd = 0.1f;
@@ -28,7 +27,8 @@ public class ZipperBehaviour : MonoBehaviour
         if (!state.IsName("Base.ZipperIdle"))
         {
             // move racoon toward new position
-            transform.position = Vector3.MoveTowards(transform.position, CameraBehaviour.zipperTarget, spd);
+            transform.position = Vector2.MoveTowards(transform.position, CameraBehaviour.zipperTarget, spd);
+            transform.position = new Vector3(transform.position.x, transform.position.y, -100f);
             // if the distance from self to the point is less than stationarySpd
             if (Vector2.Distance(transform.position, CameraBehaviour.zipperTarget) <= stationarySpd)
             {

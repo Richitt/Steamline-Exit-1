@@ -134,6 +134,36 @@ public class PunPrinter : MonoBehaviour {
             case 40:
                 UIBehavior.DisplayDialogue("A cat octopus? Meow I've seen it all!");
                 break;
+            case 41:
+                UIBehavior.DisplayDialogue("I don't know rye someone would throw out perfectly good bread.");
+                break;
+            case 42:
+                UIBehavior.DisplayDialogue("Just keep stacking and leave the chest to me!");
+                break;
+            case 43:
+                UIBehavior.DisplayDialogue("When did disco out of fashion?");
+                break;
+            case 44:
+                UIBehavior.DisplayDialogue("Seems like something suspicious is stewing in there!");
+                break;
+            case 45:
+                UIBehavior.DisplayDialogue("I've got the core essentials of this tower set!");
+                break;
+            case 46:
+                UIBehavior.DisplayDialogue("I've cracked the code of this challenge!");
+                break;
+            case 47:
+                UIBehavior.DisplayDialogue("And they said using lightbulbs wasn't a bright idea, hah!");
+                break;
+            case 48:
+                UIBehavior.DisplayDialogue("I've grown to chair about all this trash.");
+                break;
+            case 49:
+                UIBehavior.DisplayDialogue("I just need a way to snake out of this alley!");
+                break;
+            case 50:
+                UIBehavior.DisplayDialogue("This cloud doesn't look very creative.");
+                break;
             default:
                 UIBehavior.DisplayDialogue("Look at my collection!");
                 break;

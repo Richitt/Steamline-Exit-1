@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61ca8f53b9a68da479daa66fbb4cb104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorType: 0
+  colorType: 5
   landed: 0
 --- !u!212 &212370639870295888
 SpriteRenderer:

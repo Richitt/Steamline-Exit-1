@@ -8,35 +8,61 @@ public class MouseInputBehaviour : MonoBehaviour
     public List<GameObject> prefabs = new List<GameObject>();
 
     static System.Random random = new System.Random();
-
-    int counter = 0;
+    Rigidbody2D rb;
+    public float moveScale = 0.1f;
+    public float gravScale = 0.05f;
 
     // Use this for initialization
     void Start ()
     {
-		
-	}
+        rb = gameObject.AddComponent<Rigidbody2D>() as Rigidbody2D;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        // create a square on click
-        if (Input.GetMouseButtonDown(0))
+
+        if (rb == null)
         {
-            int n = random.Next(prefabs.Count);
-            GameObject prefab = prefabs[n];
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z = -10;
-            if (Physics2D.OverlapCircle(mousePos, 0.001f) == null)
-            {
-                GameObject go = Instantiate(prefab, mousePos, Quaternion.identity);
-                counter++;
-                if (counter == 10)
-                {
-                    counter = 0;
-                    PunPrinter.PrintPun(Int32.Parse(go.name.Split('_')[0]));
-                }
-            }
+            rb = gameObject.AddComponent<Rigidbody2D>() as Rigidbody2D;
+            rb.bodyType = RigidbodyType2D.Kinematic;
         }
+        Vector3 vel = rb.velocity;
+        // create a square on click
+        if (Input.GetKey("up"))
+        {
+            vel.y = moveScale;
+        }
+
+       if (Input.GetKey("down"))
+        {
+            vel.y = -moveScale;
+        }
+
+        if (Input.GetKey("left"))
+        {
+            vel.x = moveScale;
+        }
+
+        if (Input.GetKey("right"))
+        {
+            vel.x = -moveScale;
+        }
+
+        if (vel.x > 0)
+        {
+            vel.x -= 0.01f;
+        }
+
+        if (vel.y > 0)
+        {
+            vel.y -= 0.01f;
+        }
+
+        rb.velocity = vel;
+        //for evey update this.pos.y-=1;
+
+
     }
 }

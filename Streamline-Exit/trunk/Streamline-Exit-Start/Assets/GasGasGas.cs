@@ -11,7 +11,7 @@ public class GasGasGas : MonoBehaviour {
     public float horizonalSpeed;
     public float jumpSpeed;
     private SpriteRenderer sprRend;
-    Collider2D m_Collider;
+    Collider2D gasCheck;
     private void Awake()
     {
         gas = true;
@@ -21,7 +21,7 @@ public class GasGasGas : MonoBehaviour {
         horizonalSpeed = 1.5f;
         jumpSpeed = 2f;
         body.gravityScale = 0.1f *body.gravityScale;
-        m_Collider = GetComponent<Collider2D>();
+        gasCheck = GetComponent<Collider2D>();
         //body.AddForce(-Physics.gravity * body.mass);
     }
 
@@ -54,11 +54,7 @@ public class GasGasGas : MonoBehaviour {
         animator.SetBool("walk", body.velocity.x != 0);
         if (Input.GetKeyDown(KeyCode.Space) && gas == true)
         {
-            //Toggle the Collider on and off when pressing the space bar
-            m_Collider.enabled = !m_Collider.enabled;
-
-            //Output to console whether the Collider is on or not
-            Debug.Log("Collider.enabled = " + m_Collider.enabled);
+            gasCheck.enabled = !gasCheck.enabled;
         }
 
     }

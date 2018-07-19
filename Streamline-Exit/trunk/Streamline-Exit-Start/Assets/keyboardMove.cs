@@ -21,7 +21,7 @@ public class keyboardMove : MonoBehaviour {
         sprRend = GetComponent<SpriteRenderer>();
         grounded = true; //TODO: not
         horizonalSpeed = 1.5f;
-        jumpSpeed = 2f;
+        jumpSpeed = 4f;
     }
 
     // Update is called once per frame

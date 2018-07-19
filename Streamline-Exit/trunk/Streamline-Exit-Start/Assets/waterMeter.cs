@@ -7,10 +7,11 @@ public class waterMeter : MonoBehaviour {
     public Texture2D filler;
     public Vector2 pos = new Vector2(20, 40);
     public Vector2 size = new Vector2(20, 60);
+
+    public bool filling = false;
     float amount = 50;
     float fillSpeed = 0.1f;
     float drainSpeed = 0.1f;
-    public bool filling = false;
 
     private Rigidbody2D body;
 

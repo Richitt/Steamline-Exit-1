@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class keyboardMove : MonoBehaviour {
 
+    [HideInInspector] public Animator animator;
+
     private Rigidbody2D body;
-    public Animator animator;
+    private SpriteRenderer sprRend;
+
     private bool grounded;
     public float horizonalSpeed;
     public float jumpSpeed;
-    private SpriteRenderer sprRend;
+
+
     private void Awake()
     {
-        grounded = true; //TODO: not
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         sprRend = GetComponent<SpriteRenderer>();
+        grounded = true; //TODO: not
         horizonalSpeed = 1.5f;
         jumpSpeed = 2f;
     }
@@ -23,8 +27,12 @@ public class keyboardMove : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
+        if (body.velocity.y == 0)
+        {
+          grounded = true;
+        }
         /////////////////////////////////////////
-        //TODO: Debug Water State Changes 
+        //TODO: Debug Water State Changes
         if (Input.GetKeyDown("1"))
         {
            animator.SetInteger("waterState", 0);
@@ -57,13 +65,14 @@ public class keyboardMove : MonoBehaviour {
         if (Input.GetKeyDown("up") && grounded)
         {
             body.velocity = new Vector2(body.velocity.x, jumpSpeed);
+            grounded = false;
         }
 
         animator.SetBool("jump", body.velocity.y != 0);
         animator.SetBool("walk", body.velocity.x != 0);
 
     }
-   
+
     //Handling collisions here
     void OnCollisionEnter(Collision col)
     {

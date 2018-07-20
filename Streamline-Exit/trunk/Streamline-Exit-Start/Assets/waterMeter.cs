@@ -9,7 +9,7 @@ public class waterMeter : MonoBehaviour {
     public Vector2 size = new Vector2(20, 60);
 
     public bool filling = false;
-    float amount = 50;
+    [HideInInspector] public float amount = 50;
     float fillSpeed = 0.1f;
     float drainSpeed = 0.1f;
 
@@ -25,7 +25,11 @@ public class waterMeter : MonoBehaviour {
         //TODO: this is the debug GUI
         GUI.Label(new Rect(0, 0, 500, 100), "Water Amount : " + amount);
         GUI.Label(new Rect(0, 15, 500, 100), "Drate is on water : " + filling);
-
+        if (amount == 0)
+        {
+          GUI.Label(new Rect(Screen.width/2, Screen.height/2, 500, 100),
+          "You have killed Drate. You monster.");
+        }
         // draw the background:
         GUI.BeginGroup(new Rect(pos.x, pos.y, size.x, size.y));
         GUI.Box(new Rect(0, 0, size.x, size.y), guage);
@@ -38,6 +42,14 @@ public class waterMeter : MonoBehaviour {
     }
     void Update()
     {
+        // if (col.gameObject.tag == "wet")
+        // {
+        //   filling = true;
+        // }
+        // else
+        // {
+        //   filling = false;
+        // }
         //Either fill or empty the guage
         if (filling && amount < 100)
         {
@@ -61,12 +73,12 @@ public class waterMeter : MonoBehaviour {
     }
 
     //check for Water platform contact
-    void OnCollisionEnter(Collision col)
+    void OnCollisionEnter2D(Collision2D col)
     {
-        filling = (col.gameObject.tag == "water");
+        filling = (col.gameObject.tag == "wet");
     }
 
-    void OnCollisionExit(Collision col)
+    void OnCollisionExit2D(Collision2D col)
     {
         filling = false;
     }

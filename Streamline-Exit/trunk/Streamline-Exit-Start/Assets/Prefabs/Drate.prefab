@@ -24,10 +24,11 @@ GameObject:
   - component: {fileID: 114004911605563562}
   - component: {fileID: 95918661667748618}
   - component: {fileID: 114296059862241472}
-  - component: {fileID: 61370379564957286}
+  - component: {fileID: 70086087502742108}
+  - component: {fileID: 58057055832964410}
   m_Layer: 0
   m_Name: Drate
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1326411566667654}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04, y: 2.24, z: -1}
+  m_LocalPosition: {x: 5.12, y: 3.33, z: -1}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -65,31 +66,36 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &61370379564957286
-BoxCollider2D:
+--- !u!58 &58057055832964410
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1326411566667654}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 39e02d5bd5c666645bfcc78cf26a0a7b, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 1
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.3, y: 0.31}
-    newSize: {x: 0.3, y: 0.31}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.31}
-  m_EdgeRadius: 0
+  m_Radius: 0.14
+--- !u!70 &70086087502742108
+CapsuleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1326411566667654}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: b08e1e3ffcbb7144dbaed9733dda328b, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.25, y: 0.31}
+  m_Direction: 0
 --- !u!95 &95918661667748618
 Animator:
   serializedVersion: 3
@@ -99,7 +105,7 @@ Animator:
   m_GameObject: {fileID: 1326411566667654}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 50cf544ed9269cb43a02eef7aa7b49cf, type: 2}
+  m_Controller: {fileID: 9100000, guid: f949851212b476745b62ae9a3f9aab6d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -120,8 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  horizonalSpeed: 2
-  jumpSpeed: 4
+  horizontalSpeed: 0
+  jumpSpeed: 3
 --- !u!114 &114296059862241472
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -138,6 +144,7 @@ MonoBehaviour:
   pos: {x: 20, y: 40}
   size: {x: 20, y: 60}
   filling: 1
+  amount: 50
 --- !u!212 &212900453216319898
 SpriteRenderer:
   m_ObjectHideFlags: 1

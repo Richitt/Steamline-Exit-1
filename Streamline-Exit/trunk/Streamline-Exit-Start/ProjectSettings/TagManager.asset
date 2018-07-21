@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - wall
-  - wet
+  - Wall
+  - Wet
   layers:
   - Default
   - TransparentFX

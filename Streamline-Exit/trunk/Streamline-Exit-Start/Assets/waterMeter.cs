@@ -2,22 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class waterMeter : MonoBehaviour {
+public class WaterMeter : MonoBehaviour {
     public Texture2D guage;
     public Texture2D filler;
     public Vector2 pos = new Vector2(20, 40);
     public Vector2 size = new Vector2(20, 60);
 
     public bool filling = false;
-    float amount = 50;
+    [HideInInspector] public float amount = 50;
     float fillSpeed = 0.1f;
     float drainSpeed = 0.1f;
 
     private Rigidbody2D body;
+    private Collider2D vCollider;
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        vCollider = GetComponent<CapsuleCollider2D>();
     }
 
     void OnGUI()
@@ -25,7 +27,11 @@ public class waterMeter : MonoBehaviour {
         //TODO: this is the debug GUI
         GUI.Label(new Rect(0, 0, 500, 100), "Water Amount : " + amount);
         GUI.Label(new Rect(0, 15, 500, 100), "Drate is on water : " + filling);
-
+        if (amount == 0)
+        {
+          GUI.Label(new Rect(Screen.width/2, Screen.height/2, 500, 100),
+          "You have killed Drate. You monster.");
+        }
         // draw the background:
         GUI.BeginGroup(new Rect(pos.x, pos.y, size.x, size.y));
         GUI.Box(new Rect(0, 0, size.x, size.y), guage);
@@ -38,6 +44,14 @@ public class waterMeter : MonoBehaviour {
     }
     void Update()
     {
+        // if (col.gameObject.tag == "wet")
+        // {
+        //   filling = true;
+        // }
+        // else
+        // {
+        //   filling = false;
+        // }
         //Either fill or empty the guage
         if (filling && amount < 100)
         {
@@ -57,18 +71,25 @@ public class waterMeter : MonoBehaviour {
         {
             amount = 0;
         }
-
     }
 
     //check for Water platform contact
-    void OnCollisionEnter(Collision col)
+    void OnCollisionEnter2D(Collision2D col)
     {
-        filling = (col.gameObject.tag == "water");
+        // only use filling logic for one collider
+        if (col.otherCollider == vCollider)
+        {
+            filling = (col.gameObject.tag == "wet");
+        }
     }
 
-    void OnCollisionExit(Collision col)
+    void OnCollisionExit2D(Collision2D col)
     {
-        filling = false;
+        // only use filling logic for one collider
+        if (col.otherCollider == vCollider)
+        {
+            filling = false;
+        }
     }
 
 }

@@ -12,6 +12,9 @@ public class keyboardMove : MonoBehaviour {
     private bool grounded;
     public float horizonalSpeed;
     public float jumpSpeed;
+    private bool gasState;
+    private bool liquidState;
+    private bool solidState;
 
 
     private void Awake()

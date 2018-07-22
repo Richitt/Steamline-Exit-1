@@ -25,7 +25,7 @@ public class LiquidMovement : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        bool grounded = Grounded();
+        bool grounded = Grounded() || Input.GetKey(KeyCode.LeftControl);
         /////////////////////////////////////////
         //TODO: Debug Water State Changes
         if (Input.GetKeyDown("1"))
@@ -42,24 +42,43 @@ public class LiquidMovement : MonoBehaviour {
         }
         //////////////////////////////////////////
 
+        // can't move if transition exists
         int hDirection = 0;
-        if (Input.GetKey("left"))
+        GameObject transObj = GameObject.FindGameObjectWithTag("SceneTransition");
+        if (transObj == null)
         {
-            hDirection--;
-        }
-        if (Input.GetKey("right"))
-        {
-            hDirection++;
-        }
-        body.velocity = new Vector2(hDirection * horizontalSpeed, body.velocity.y);
+            if (Input.GetKey("left"))
+            {
+                hDirection--;
+            }
+            if (Input.GetKey("right"))
+            {
+                hDirection++;
+            }
+            body.velocity = new Vector2(hDirection * horizontalSpeed, body.velocity.y);
 
-        if (Input.GetKey("down"))
-        {
-            body.velocity = new Vector2(0, -jumpSpeed);
+            if (Input.GetKey("down"))
+            {
+                body.velocity = new Vector2(0, -jumpSpeed);
+            }
+            if (Input.GetKeyDown("up") && grounded)
+            {
+                body.velocity = new Vector2(body.velocity.x, jumpSpeed);
+            }
         }
-        if (Input.GetKeyDown("up") && grounded)
+        else
         {
-            body.velocity = new Vector2(body.velocity.x, jumpSpeed);
+            SceneTransition trans = transObj.GetComponent<SceneTransition>();
+            switch (trans.side)
+            {
+                case SceneTransitions.Side.LEFT:
+                    hDirection = -1;
+                    break;
+                case SceneTransitions.Side.RIGHT:
+                    hDirection = 1;
+                    break;
+            }
+            body.velocity = new Vector2(hDirection * horizontalSpeed * 0.5f, body.velocity.y);
         }
 
         // animate with blend tree

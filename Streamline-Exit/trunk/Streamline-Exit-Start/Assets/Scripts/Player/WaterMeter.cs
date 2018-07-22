@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaterMeter : MonoBehaviour {
+public class WaterMeter : MonoBehaviour
+{
     public Texture2D guage;
     public Texture2D filler;
     public Vector2 pos = new Vector2(20, 40);
@@ -11,15 +12,21 @@ public class WaterMeter : MonoBehaviour {
     public bool filling = false;
     [HideInInspector] public float amount = 50;
     float fillSpeed = 0.1f;
-    float drainSpeed = 0.1f;
+    float drainSpeed = 0.05f;
 
     private Rigidbody2D body;
     private Collider2D vCollider;
+    private Animator animator;
+
+    const int SMALL = -1;
+    const int NORMAL = 0;
+    const int LARGE = 1;
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        vCollider = GetComponent<CapsuleCollider2D>();
+        vCollider = GetComponent<CircleCollider2D>();
+        animator = GetComponent<Animator>();
     }
 
     void OnGUI()
@@ -44,14 +51,6 @@ public class WaterMeter : MonoBehaviour {
     }
     void Update()
     {
-        // if (col.gameObject.tag == "wet")
-        // {
-        //   filling = true;
-        // }
-        // else
-        // {
-        //   filling = false;
-        // }
         //Either fill or empty the guage
         if (filling && amount < 100)
         {
@@ -63,13 +62,20 @@ public class WaterMeter : MonoBehaviour {
         }
 
         //Check for boundaries in the percentages
-        if (amount > 100)
+        amount = Mathf.Clamp(amount, 0f, 100f);
+
+        // set animation
+        if (amount <= 30)
         {
-            amount = 100;
+            animator.SetInteger("Size", SMALL);
         }
-        else if (amount < 0)
+        else if (amount >= 60)
         {
-            amount = 0;
+            animator.SetInteger("Size", LARGE);
+        }
+        else
+        {
+            animator.SetInteger("Size", NORMAL);
         }
     }
 
@@ -79,7 +85,7 @@ public class WaterMeter : MonoBehaviour {
         // only use filling logic for one collider
         if (col.otherCollider == vCollider)
         {
-            filling = (col.gameObject.tag == "wet");
+            filling = (col.gameObject.tag == "Wet");
         }
     }
 
@@ -91,5 +97,4 @@ public class WaterMeter : MonoBehaviour {
             filling = false;
         }
     }
-
 }

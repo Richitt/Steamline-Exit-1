@@ -74,11 +74,18 @@ public class KeyboardMove : MonoBehaviour {
 
     public bool Grounded()
     {
+        return CheckRaycastGround(Vector2.zero) ||
+            CheckRaycastGround(Vector2.left * (vCollider.bounds.extents.x + vCollider.offset.x)) || 
+            CheckRaycastGround(Vector2.right * (vCollider.bounds.extents.x + vCollider.offset.x));
+    }
+
+    public bool CheckRaycastGround(Vector2 pos)
+    {
         // player has 2 colliders, so to find more, make this 3
         RaycastHit2D[] results = new RaycastHit2D[3];
         // raycast for a collision down
-        Physics2D.Raycast(transform.position, Vector2.down, new ContactFilter2D(), results,
-            vCollider.bounds.extents.y + vCollider.offset.y + 0.1f);
+        Physics2D.Raycast((Vector2)transform.position + pos, Vector2.down, new ContactFilter2D(), results,
+            vCollider.bounds.extents.y - vCollider.offset.y + 0.1f);
         // make sure raycast hit isn't only player
         foreach (RaycastHit2D result in results)
         {

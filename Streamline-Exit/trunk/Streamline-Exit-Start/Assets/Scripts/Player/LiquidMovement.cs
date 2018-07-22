@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyboardMove : MonoBehaviour {
+public class LiquidMovement : MonoBehaviour {
 
-    [HideInInspector] public Animator animator;
+    private Animator animator;
 
     private Rigidbody2D body;
-    private SpriteRenderer sr;
 
     public float horizontalSpeed;
     public float jumpSpeed;
@@ -16,15 +15,14 @@ public class KeyboardMove : MonoBehaviour {
     private bool solidState;
 
     private Collider2D vCollider;
+    private ChangeState changeState;
 
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        sr = GetComponent<SpriteRenderer>();
         vCollider = GetComponent<CapsuleCollider2D>();
-        horizontalSpeed = 1.5f;
-        jumpSpeed = 4f;
+        changeState = GetComponent<ChangeState>();
     }
 
     // Update is called once per frame
@@ -35,15 +33,15 @@ public class KeyboardMove : MonoBehaviour {
         //TODO: Debug Water State Changes
         if (Input.GetKeyDown("1"))
         {
-           animator.SetInteger("waterState", 0);
+            changeState.SetState(ChangeState.SOLID);
         }
         if (Input.GetKeyDown("2"))
         {
-            animator.SetInteger("waterState", 1);
+            changeState.SetState(ChangeState.LIQUID);
         }
         if (Input.GetKeyDown("3"))
         {
-            animator.SetInteger("waterState", 2);
+            changeState.SetState(ChangeState.GAS);
         }
         //////////////////////////////////////////
 
@@ -56,12 +54,6 @@ public class KeyboardMove : MonoBehaviour {
         {
             hDirection++;
         }
-        // if player wants to go in a direction, go that way and face that way
-        if (hDirection != 0f)
-        {
-            sr.flipX = (hDirection == 1);
-        }
-        animator.SetFloat("VelocityX", hDirection);
         body.velocity = new Vector2(hDirection * horizontalSpeed, body.velocity.y);
 
         if (Input.GetKey("down"))
@@ -73,16 +65,30 @@ public class KeyboardMove : MonoBehaviour {
             body.velocity = new Vector2(body.velocity.x, jumpSpeed);
         }
 
+        // animate with blend tree
+        animator.SetFloat("VelocityX", hDirection);
+        if (hDirection != 0)
+        {
+            animator.SetFloat("FacingX", hDirection);
+        }
         animator.SetFloat("VelocityY", Mathf.Sign(body.velocity.y));
         animator.SetBool("Grounded", grounded);
     }
 
     public bool Grounded()
     {
+        return CheckRaycastGround(Vector2.zero) ||
+            CheckRaycastGround(Vector2.left * (vCollider.bounds.extents.x + vCollider.offset.x)) || 
+            CheckRaycastGround(Vector2.right * (vCollider.bounds.extents.x + vCollider.offset.x));
+    }
+
+    public bool CheckRaycastGround(Vector2 pos)
+    {
         // player has 2 colliders, so to find more, make this 3
         RaycastHit2D[] results = new RaycastHit2D[3];
         // raycast for a collision down
-        Physics2D.Raycast(transform.position, Vector2.down, new ContactFilter2D(), results, vCollider.bounds.extents.y + 0.1f);
+        Physics2D.Raycast((Vector2)transform.position + pos, Vector2.down, new ContactFilter2D(), results,
+            vCollider.bounds.extents.y - vCollider.offset.y + 0.1f);
         // make sure raycast hit isn't only player
         foreach (RaycastHit2D result in results)
         {

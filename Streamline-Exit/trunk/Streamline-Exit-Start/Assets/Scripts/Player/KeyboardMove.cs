@@ -85,7 +85,6 @@ public class KeyboardMove : MonoBehaviour {
         {
             if (result != null && result.collider != null)
             {
-                Debug.Log(result.collider.gameObject.tag);
                 if (result.collider.gameObject.tag != "Player")
                 {
                     return true;

@@ -44,14 +44,6 @@ public class WaterMeter : MonoBehaviour {
     }
     void Update()
     {
-        // if (col.gameObject.tag == "wet")
-        // {
-        //   filling = true;
-        // }
-        // else
-        // {
-        //   filling = false;
-        // }
         //Either fill or empty the guage
         if (filling && amount < 100)
         {
@@ -79,7 +71,7 @@ public class WaterMeter : MonoBehaviour {
         // only use filling logic for one collider
         if (col.otherCollider == vCollider)
         {
-            filling = (col.gameObject.tag == "wet");
+            filling = (col.gameObject.tag == "Wet");
         }
     }
 
@@ -91,5 +83,4 @@ public class WaterMeter : MonoBehaviour {
             filling = false;
         }
     }
-
 }

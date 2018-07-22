@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyboardMove : MonoBehaviour {
+public class LiquidMovement : MonoBehaviour {
 
     private Animator animator;
 
     private Rigidbody2D body;
-    private SpriteRenderer sr;
 
     public float horizontalSpeed;
     public float jumpSpeed;
 
     private Collider2D vCollider;
+    private ChangeState changeState;
 
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        sr = GetComponent<SpriteRenderer>();
         vCollider = GetComponent<CapsuleCollider2D>();
+        changeState = GetComponent<ChangeState>();
     }
 
     // Update is called once per frame
@@ -30,15 +30,15 @@ public class KeyboardMove : MonoBehaviour {
         //TODO: Debug Water State Changes
         if (Input.GetKeyDown("1"))
         {
-           animator.SetInteger("waterState", 0);
+            changeState.SetState(ChangeState.SOLID);
         }
         if (Input.GetKeyDown("2"))
         {
-            animator.SetInteger("waterState", 1);
+            changeState.SetState(ChangeState.LIQUID);
         }
         if (Input.GetKeyDown("3"))
         {
-            animator.SetInteger("waterState", 2);
+            changeState.SetState(ChangeState.GAS);
         }
         //////////////////////////////////////////
 

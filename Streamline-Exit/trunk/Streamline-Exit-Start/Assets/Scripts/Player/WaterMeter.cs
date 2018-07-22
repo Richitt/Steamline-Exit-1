@@ -19,7 +19,7 @@ public class WaterMeter : MonoBehaviour {
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        vCollider = GetComponent<CapsuleCollider2D>();
+        vCollider = GetComponent<CircleCollider2D>();
     }
 
     void OnGUI()

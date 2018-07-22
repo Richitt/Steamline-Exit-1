@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class waterMeter : MonoBehaviour {
+public class WaterMeter : MonoBehaviour {
     public Texture2D guage;
     public Texture2D filler;
     public Vector2 pos = new Vector2(20, 40);
@@ -14,10 +14,12 @@ public class waterMeter : MonoBehaviour {
     float drainSpeed = 0.1f;
 
     private Rigidbody2D body;
+    private Collider2D vCollider;
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        vCollider = GetComponent<CapsuleCollider2D>();
     }
 
     void OnGUI()
@@ -69,18 +71,25 @@ public class waterMeter : MonoBehaviour {
         {
             amount = 0;
         }
-
     }
 
     //check for Water platform contact
     void OnCollisionEnter2D(Collision2D col)
     {
-        filling = (col.gameObject.tag == "wet");
+        // only use filling logic for one collider
+        if (col.otherCollider == vCollider)
+        {
+            filling = (col.gameObject.tag == "wet");
+        }
     }
 
     void OnCollisionExit2D(Collision2D col)
     {
-        filling = false;
+        // only use filling logic for one collider
+        if (col.otherCollider == vCollider)
+        {
+            filling = false;
+        }
     }
 
 }

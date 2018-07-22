@@ -20,8 +20,6 @@ public class KeyboardMove : MonoBehaviour {
         animator = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         vCollider = GetComponent<CapsuleCollider2D>();
-        horizontalSpeed = 1.5f;
-        jumpSpeed = 4f;
     }
 
     // Update is called once per frame
@@ -53,12 +51,6 @@ public class KeyboardMove : MonoBehaviour {
         {
             hDirection++;
         }
-        // if player wants to go in a direction, go that way and face that way
-        if (hDirection != 0f)
-        {
-            sr.flipX = (hDirection == 1);
-        }
-        animator.SetFloat("VelocityX", hDirection);
         body.velocity = new Vector2(hDirection * horizontalSpeed, body.velocity.y);
 
         if (Input.GetKey("down"))
@@ -70,6 +62,12 @@ public class KeyboardMove : MonoBehaviour {
             body.velocity = new Vector2(body.velocity.x, jumpSpeed);
         }
 
+        // animate with blend tree
+        animator.SetFloat("VelocityX", hDirection);
+        if (hDirection != 0)
+        {
+            animator.SetFloat("FacingX", hDirection);
+        }
         animator.SetFloat("VelocityY", Mathf.Sign(body.velocity.y));
         animator.SetBool("Grounded", grounded);
     }
@@ -79,7 +77,8 @@ public class KeyboardMove : MonoBehaviour {
         // player has 2 colliders, so to find more, make this 3
         RaycastHit2D[] results = new RaycastHit2D[3];
         // raycast for a collision down
-        Physics2D.Raycast(transform.position, Vector2.down, new ContactFilter2D(), results, vCollider.bounds.extents.y + 0.1f);
+        Physics2D.Raycast(transform.position, Vector2.down, new ContactFilter2D(), results,
+            vCollider.bounds.extents.y + vCollider.offset.y + 0.1f);
         // make sure raycast hit isn't only player
         foreach (RaycastHit2D result in results)
         {

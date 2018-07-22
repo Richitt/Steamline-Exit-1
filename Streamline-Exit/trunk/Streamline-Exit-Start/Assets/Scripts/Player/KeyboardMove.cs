@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KeyboardMove : MonoBehaviour {
 
-    [HideInInspector] public Animator animator;
+    private Animator animator;
 
     private Rigidbody2D body;
     private SpriteRenderer sr;

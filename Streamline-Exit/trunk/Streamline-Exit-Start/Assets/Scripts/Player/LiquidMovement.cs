@@ -2,64 +2,83 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyboardMove : MonoBehaviour {
+public class LiquidMovement : MonoBehaviour {
 
     private Animator animator;
 
     private Rigidbody2D body;
-    private SpriteRenderer sr;
 
     public float horizontalSpeed;
     public float jumpSpeed;
 
     private Collider2D vCollider;
+    private ChangeState changeState;
 
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        sr = GetComponent<SpriteRenderer>();
         vCollider = GetComponent<CapsuleCollider2D>();
+        changeState = GetComponent<ChangeState>();
     }
 
     // Update is called once per frame
     void Update ()
     {
-        bool grounded = Grounded();
+        bool grounded = Grounded() || Input.GetKey(KeyCode.LeftControl);
         /////////////////////////////////////////
         //TODO: Debug Water State Changes
         if (Input.GetKeyDown("1"))
         {
-           animator.SetInteger("waterState", 0);
+            changeState.SetState(ChangeState.SOLID);
         }
         if (Input.GetKeyDown("2"))
         {
-            animator.SetInteger("waterState", 1);
+            changeState.SetState(ChangeState.LIQUID);
         }
         if (Input.GetKeyDown("3"))
         {
-            animator.SetInteger("waterState", 2);
+            changeState.SetState(ChangeState.GAS);
         }
         //////////////////////////////////////////
 
+        // can't move if transition exists
         int hDirection = 0;
-        if (Input.GetKey("left"))
+        GameObject transObj = GameObject.FindGameObjectWithTag("SceneTransition");
+        if (transObj == null)
         {
-            hDirection--;
-        }
-        if (Input.GetKey("right"))
-        {
-            hDirection++;
-        }
-        body.velocity = new Vector2(hDirection * horizontalSpeed, body.velocity.y);
+            if (Input.GetKey("left"))
+            {
+                hDirection--;
+            }
+            if (Input.GetKey("right"))
+            {
+                hDirection++;
+            }
+            body.velocity = new Vector2(hDirection * horizontalSpeed, body.velocity.y);
 
-        if (Input.GetKey("down"))
-        {
-            body.velocity = new Vector2(0, -jumpSpeed);
+            if (Input.GetKey("down"))
+            {
+                body.velocity = new Vector2(0, -jumpSpeed);
+            }
+            if (Input.GetKeyDown("up") && grounded)
+            {
+                body.velocity = new Vector2(body.velocity.x, jumpSpeed);
+            }
         }
-        if (Input.GetKeyDown("up") && grounded)
+        else
         {
-            body.velocity = new Vector2(body.velocity.x, jumpSpeed);
+            SceneTransition trans = transObj.GetComponent<SceneTransition>();
+            switch (trans.side)
+            {
+                case SceneTransitions.Side.LEFT:
+                    hDirection = -1;
+                    break;
+                case SceneTransitions.Side.RIGHT:
+                    hDirection = 1;
+                    break;
+            }
+            body.velocity = new Vector2(hDirection * horizontalSpeed * 0.5f, body.velocity.y);
         }
 
         // animate with blend tree

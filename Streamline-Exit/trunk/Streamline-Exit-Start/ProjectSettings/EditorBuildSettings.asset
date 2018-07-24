@@ -4,4 +4,20 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Levels/Hub.unity
+    guid: 9d45f1251f821344189e5a0d92ac8b52
+  - enabled: 1
+    path: Assets/Scenes/Levels/Puzzle1.unity
+    guid: 3317ef0b29b2b2447a12a9a2410572f0
+  - enabled: 1
+    path: Assets/Scenes/Levels/Puzzle2.unity
+    guid: 8e9e28f76c65f844b8e09ce2618c8559
+  - enabled: 1
+    path: Assets/Scenes/demoScreen.unity
+    guid: 6faaf4a79285d424ca21738a92e45a9f
+  - enabled: 1
+    path: Assets/Scenes/WaterCycleScreen.unity
+    guid: 91f53667a4791954982c1348f36096fc
+  m_configObjects: {}

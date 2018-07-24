@@ -14,7 +14,6 @@ public class WaterMeter : MonoBehaviour
     float fillSpeed = 0.1f;
     float drainSpeed = 0.05f;
 
-    private Rigidbody2D body;
     private Collider2D vCollider;
     private Animator animator;
 
@@ -24,7 +23,6 @@ public class WaterMeter : MonoBehaviour
 
     void Start()
     {
-        body = GetComponent<Rigidbody2D>();
         vCollider = GetComponent<CircleCollider2D>();
         animator = GetComponent<Animator>();
     }

@@ -6,8 +6,8 @@ public class WaterMeter : MonoBehaviour
 {
     public Texture2D guage;
     public Texture2D filler;
-    public Vector2 pos = new Vector2(20, 40);
-    public Vector2 size = new Vector2(20, 60);
+    public Vector2 indicatorPos = new Vector2(20, 40);
+    public Vector2 indicatorSize = new Vector2(20, 60);
 
     public bool filling = false;
     [HideInInspector] public float amount = 50;
@@ -17,9 +17,10 @@ public class WaterMeter : MonoBehaviour
     private Collider2D vCollider;
     private Animator animator;
 
-    const int SMALL = -1;
-    const int NORMAL = 0;
-    const int LARGE = 1;
+    public const int SMALL = -1;
+    public const int NORMAL = 0;
+    public const int LARGE = 1;
+    public int Size = 0;
 
     void Start()
     {
@@ -38,12 +39,12 @@ public class WaterMeter : MonoBehaviour
           "You have killed Drate. You monster.");
         }
         // draw the background:
-        GUI.BeginGroup(new Rect(pos.x, pos.y, size.x, size.y));
-        GUI.Box(new Rect(0, 0, size.x, size.y), guage);
+        GUI.BeginGroup(new Rect(indicatorPos.x, indicatorPos.y, indicatorSize.x, indicatorSize.y));
+        GUI.Box(new Rect(0, 0, indicatorSize.x, indicatorSize.y), guage);
 
         // draw the filled-in part:
-        GUI.BeginGroup(new Rect(0, (size.y - (size.y * amount/100)), size.x, size.y * amount/100));
-        GUI.Box(new Rect(0, -size.y + (size.y * amount/100), size.x, size.y), filler);
+        GUI.BeginGroup(new Rect(0, (indicatorSize.y - (indicatorSize.y * amount/100)), indicatorSize.x, indicatorSize.y * amount/100));
+        GUI.Box(new Rect(0, -indicatorSize.y + (indicatorSize.y * amount/100), indicatorSize.x, indicatorSize.y), filler);
         GUI.EndGroup();
         GUI.EndGroup();
     }
@@ -66,14 +67,17 @@ public class WaterMeter : MonoBehaviour
         if (amount <= 30)
         {
             animator.SetInteger("Size", SMALL);
+            Size = SMALL;
         }
         else if (amount >= 60)
         {
             animator.SetInteger("Size", LARGE);
+            Size = LARGE;
         }
         else
         {
             animator.SetInteger("Size", NORMAL);
+            Size = NORMAL;
         }
     }
 

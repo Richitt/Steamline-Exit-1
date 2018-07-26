@@ -2,56 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LiquidMovement : MonoBehaviour {
-
-    private Animator animator;
-
-    private Rigidbody2D body;
-
+public class LiquidMovement : MonoBehaviour
+{
     public float horizontalSpeed;
     public float jumpSpeed;
 
-    private Collider2D vCollider;
-    private ChangeState changeState;
+    protected Animator animator;
+    protected Rigidbody2D body;
+    protected SpriteRenderer sr;
+    protected Collider2D vCollider;
+    protected ChangeState changeState;
+    protected WaterMeter waterMeter;
 
-    private void Awake()
+    protected int facingX = -1;
+
+    protected virtual void Start()
     {
+        sr = GetComponent<SpriteRenderer>();
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         vCollider = GetComponent<CapsuleCollider2D>();
         changeState = GetComponent<ChangeState>();
+        waterMeter = GetComponent<WaterMeter>();
     }
 
     // Update is called once per frame
-    void Update ()
+    protected virtual void Update ()
     {
-        bool grounded = Grounded() || Input.GetKey(KeyCode.LeftControl);
-        /////////////////////////////////////////
-        //TODO: Debug Water State Changes
-        if (Input.GetKeyDown("1"))
-        {
-            changeState.SetState(ChangeState.SOLID);
-        }
-        if (Input.GetKeyDown("2"))
-        {
-            changeState.SetState(ChangeState.LIQUID);
-        }
-        if (Input.GetKeyDown("3"))
-        {
-            changeState.SetState(ChangeState.GAS);
-        }
-        //////////////////////////////////////////
+        sr.flipX = false;
+        bool grounded = Grounded();
 
         // can't move if transition exists
         int hDirection = 0;
         GameObject transObj = GameObject.FindGameObjectWithTag("SceneTransition");
         if (transObj == null)
         {
-            if (Input.GetKey("left"))
+            if (Input.GetKey("left") && Movable())
             {
                 hDirection--;
             }
-            if (Input.GetKey("right"))
+            if (Input.GetKey("right") && Movable())
             {
                 hDirection++;
             }
@@ -61,7 +51,7 @@ public class LiquidMovement : MonoBehaviour {
             {
                 body.velocity = new Vector2(0, -jumpSpeed);
             }
-            if (Input.GetKeyDown("up") && grounded)
+            if (Input.GetKeyDown("up") && Jumpable())
             {
                 body.velocity = new Vector2(body.velocity.x, jumpSpeed);
             }
@@ -86,19 +76,30 @@ public class LiquidMovement : MonoBehaviour {
         if (hDirection != 0)
         {
             animator.SetFloat("FacingX", hDirection);
+            facingX = hDirection;
         }
         animator.SetFloat("VelocityY", Mathf.Sign(body.velocity.y));
         animator.SetBool("Grounded", grounded);
     }
 
-    public bool Grounded()
+    protected virtual bool Jumpable()
+    {
+        return Grounded();
+    }
+
+    protected virtual bool Movable()
+    {
+        return true;
+    }
+
+    private bool Grounded()
     {
         return CheckRaycastGround(Vector2.zero) ||
             CheckRaycastGround(Vector2.left * (vCollider.bounds.extents.x + vCollider.offset.x)) || 
             CheckRaycastGround(Vector2.right * (vCollider.bounds.extents.x + vCollider.offset.x));
     }
 
-    public bool CheckRaycastGround(Vector2 pos)
+    private bool CheckRaycastGround(Vector2 pos)
     {
         // player has 2 colliders, so to find more, make this 3
         RaycastHit2D[] results = new RaycastHit2D[3];

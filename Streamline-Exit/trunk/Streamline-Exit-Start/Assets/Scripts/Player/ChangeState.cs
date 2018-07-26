@@ -20,10 +20,21 @@ public class ChangeState : MonoBehaviour
     }
 	
 	// Update is called once per frame
-	void Update ()
+	void Update()
     {
-		
-	}
+        if (Input.GetKeyDown("1"))
+        {
+            SetState(SOLID);
+        }
+        if (Input.GetKeyDown("2"))
+        {
+            SetState(LIQUID);
+        }
+        if (Input.GetKeyDown("3"))
+        {
+            SetState(GAS);
+        }
+    }
 
     public void SetState(int state)
     {
@@ -31,7 +42,35 @@ public class ChangeState : MonoBehaviour
         {
             return;
         }
+
+        // remove old components. Make sure everything is a child of LiquidMovement or else this won't work
+        LiquidMovement old = gameObject.GetComponent<LiquidMovement>();
+        float horizontalSpeed = old.horizontalSpeed;
+        float jumpSpeed = old.jumpSpeed;
+        Destroy(old);
+
         State = state;
         animator.SetInteger("State", State);
+        // add new components
+        LiquidMovement movement = null;
+        switch (State)
+        {
+            case SOLID:
+                movement = gameObject.AddComponent<SolidMovement>();
+                break;
+            case LIQUID:
+                movement = gameObject.AddComponent<LiquidMovement>();
+                break;
+            case GAS:
+                // movement = gameObject.AddComponent<GasMovement>();
+                break;
+            default:
+                throw new System.Exception("That's not a valid state. :frogs:");
+        }
+        if (movement != null)
+        {
+            movement.horizontalSpeed = horizontalSpeed;
+            movement.jumpSpeed = jumpSpeed;
+        }
     }
 }

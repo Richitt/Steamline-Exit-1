@@ -3,30 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PickupCollector : MonoBehaviour {
+	/**
+	 * TODO: so if you go back into the room it doesn't kill itself?
+Why not make a static dictionary
+and access it
+and then on Start, if the dictionary entry is set to true or something, Destroy(gameObject)
+	*/
 
-	[HideInInspector] public int objective = 0;
+	[HideInInspector] public bool keyGet = false;
 
 	void Update ()
 	{
 		
-		if (objective == 1) {
-			Debug.Log ("Good show m8");
-			objective++;
-		} else {
-			Debug.Log (objective);
-		}
 	}
 
 	void OnTriggerEnter2D (Collider2D other) 
 	{
 		if (other.tag == "Player") 
 		{
-			Debug.Log ("TOUCHA TOUCHA TOUCHA TOUCH ME I WANNA FEEL DIRTY");
 			if (this.gameObject.name == "Key") 
 			{
-				objective++;
+				keyGet = true;
 			}
-			this.gameObject.SetActive(false);
+
+			transform.GetComponent<Collider2D>().enabled = false;
+			transform.GetComponent<Renderer>().enabled = false;
+
+
 		}
 	}
 }

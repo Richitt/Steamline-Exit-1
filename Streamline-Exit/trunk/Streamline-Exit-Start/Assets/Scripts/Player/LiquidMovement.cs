@@ -2,36 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LiquidMovement : MonoBehaviour {
-
-    private Animator animator;
-
-    private Rigidbody2D body;
-
+public class LiquidMovement : MonoBehaviour
+{
     public float horizontalSpeed;
     public float jumpSpeed;
     private bool gasState;
     private bool liquidState;
     private bool solidState;
+    private float currentf;
     private Sprite[] gasSprites;
 
-    private Collider2D vCollider;
-    private ChangeState changeState;
+    protected Animator animator;
+    protected Rigidbody2D body;
+    protected SpriteRenderer sr;
+    protected Collider2D vCollider;
+    protected ChangeState changeState;
+    protected WaterMeter waterMeter;
 
-    private void Awake()
+    protected int facingX = -1;
+
+    protected virtual void Start()
     {
+        currentf = 0.9f;
         gasSprites = Resources.LoadAll<Sprite>("gasMode");
+        sr = GetComponent<SpriteRenderer>();
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         vCollider = GetComponent<CapsuleCollider2D>();
         changeState = GetComponent<ChangeState>();
+        waterMeter = GetComponent<WaterMeter>();
     }
 
     // Update is called once per frame
-    void Update ()
+    protected virtual void Update ()
     {
+        body.gravityScale = currentf;
+        body.drag = 0f;
+        sr.flipX = false;
         bool grounded = Grounded();
-        /////////////////////////////////////////
         //TODO: Debug Water State Changes
         if (Input.GetKeyDown("space"))
         {
@@ -50,26 +58,51 @@ public class LiquidMovement : MonoBehaviour {
         {
             changeState.SetState(ChangeState.GAS);
         }
-        //////////////////////////////////////////
 
+        // can't move if transition exists
         int hDirection = 0;
-        if (Input.GetKey("left"))
+        GameObject transObj = GameObject.FindGameObjectWithTag("SceneTransition");
+        if (transObj == null)
         {
-            hDirection--;
-        }
-        if (Input.GetKey("right"))
-        {
-            hDirection++;
-        }
-        body.velocity = new Vector2(hDirection * horizontalSpeed, body.velocity.y);
+            if (Input.GetKey("left") && Movable())
+            {
+                hDirection--;
+            }
+            if (Input.GetKey("right") && Movable())
+            {
+                hDirection++;
+            }
+            body.velocity = new Vector2(hDirection * horizontalSpeed, body.velocity.y);
 
-        if (Input.GetKey("down"))
-        {
-            body.velocity = new Vector2(0, -jumpSpeed);
+            if (Input.GetKey("down"))
+            {
+                if (solidState == true)
+                {
+                    body.velocity = new Vector2(0, -25);
+                }
+                else
+                {
+                    body.velocity = new Vector2(0, -jumpSpeed);
+                }
+            }
+            if (Input.GetKeyDown("up") && Jumpable())
+            {
+                body.velocity = new Vector2(body.velocity.x, jumpSpeed);
+            }
         }
-        if (Input.GetKeyDown("up") && grounded)
+        else
         {
-            body.velocity = new Vector2(body.velocity.x, jumpSpeed);
+           // SceneTransition trans = transObj.GetComponent<SceneTransition>();
+            //switch (trans.side)
+            //{
+             //   case SceneTransitions.Side.LEFT:
+             //       hDirection = -1;
+              //      break;
+             //   case SceneTransitions.Side.RIGHT:
+            //        hDirection = 1;
+            //        break;
+         //   }
+          //  body.velocity = new Vector2(hDirection * horizontalSpeed * 0.5f, body.velocity.y);
         }
 
         // animate with blend tree
@@ -77,6 +110,7 @@ public class LiquidMovement : MonoBehaviour {
         if (hDirection != 0)
         {
             animator.SetFloat("FacingX", hDirection);
+            facingX = hDirection;
         }
         animator.SetFloat("VelocityY", Mathf.Sign(body.velocity.y));
         animator.SetBool("Grounded", grounded);
@@ -96,22 +130,50 @@ public class LiquidMovement : MonoBehaviour {
             Vector2 dir = new Vector2(0, 1);
             GetComponent<Rigidbody2D>().AddForce(dir * 15);
         }
+        if (checkere.Equals("WindUpBoxStrong") && gasState == true)
+        {
+            Debug.Log("hit it here boy");
+            Vector2 dir = new Vector2(0, 1);
+            GetComponent<Rigidbody2D>().AddForce(dir * 50);
+        }
+        if (checkere.Equals("glacieSolid"))
+        {
+            gasState = false;
+            currentf = 1.2f;
+            solidState = true;
+        }
+        if (checkere.Equals("glacieSolid2.0"))
+        {
+            gasState = false;
+            currentf = 1.2f;
+            solidState = true;
+        }
         if (checkere.Equals("ToasterMan"))
         {
             Debug.Log("hit the toast");
             gasState = true;
             GetComponent<SpriteRenderer>().sprite = gasSprites[0];
+            currentf = 0.3f;
         }
-
     }
-    public bool Grounded()
+    protected virtual bool Jumpable()
+    {
+        return Grounded();
+    }
+
+    protected virtual bool Movable()
+    {
+        return true;
+    }
+
+    private bool Grounded()
     {
         return CheckRaycastGround(Vector2.zero) ||
             CheckRaycastGround(Vector2.left * (vCollider.bounds.extents.x + vCollider.offset.x)) || 
             CheckRaycastGround(Vector2.right * (vCollider.bounds.extents.x + vCollider.offset.x));
     }
 
-    public bool CheckRaycastGround(Vector2 pos)
+    private bool CheckRaycastGround(Vector2 pos)
     {
         // player has 2 colliders, so to find more, make this 3
         RaycastHit2D[] results = new RaycastHit2D[3];

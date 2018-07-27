@@ -281,7 +281,11 @@ GameObject:
   - component: {fileID: 966809880}
   m_Layer: 0
   m_Name: Change to Water
+<<<<<<< HEAD:Streamline-Exit/trunk/Streamline-Exit-Start/Assets/WaterCycleScreen.unity
+  m_TagString: wet
+=======
   m_TagString: Wet
+>>>>>>> f55e5e3f2630b374507316add105fabd28a63f1e:Streamline-Exit/trunk/Streamline-Exit-Start/Assets/Scenes/WaterCycleScreen.unity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -477,7 +481,11 @@ GameObject:
   - component: {fileID: 1227134363}
   m_Layer: 0
   m_Name: Change to Steam
+<<<<<<< HEAD:Streamline-Exit/trunk/Streamline-Exit-Start/Assets/WaterCycleScreen.unity
+  m_TagString: wet
+=======
   m_TagString: Wall
+>>>>>>> f55e5e3f2630b374507316add105fabd28a63f1e:Streamline-Exit/trunk/Streamline-Exit-Start/Assets/Scenes/WaterCycleScreen.unity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -609,7 +617,11 @@ GameObject:
   - component: {fileID: 1410987053}
   m_Layer: 0
   m_Name: Pure Water Source
+<<<<<<< HEAD:Streamline-Exit/trunk/Streamline-Exit-Start/Assets/WaterCycleScreen.unity
+  m_TagString: wet
+=======
   m_TagString: Wet
+>>>>>>> f55e5e3f2630b374507316add105fabd28a63f1e:Streamline-Exit/trunk/Streamline-Exit-Start/Assets/Scenes/WaterCycleScreen.unity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -621,7 +633,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1410987048}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+<<<<<<< HEAD:Streamline-Exit/trunk/Streamline-Exit-Start/Assets/WaterCycleScreen.unity
+  m_LocalPosition: {x: -4.07, y: -2.85, z: 0}
+=======
   m_LocalPosition: {x: -4.68, y: -2.86, z: -0.5}
+>>>>>>> f55e5e3f2630b374507316add105fabd28a63f1e:Streamline-Exit/trunk/Streamline-Exit-Start/Assets/Scenes/WaterCycleScreen.unity
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1365760646}
@@ -636,7 +652,11 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+<<<<<<< HEAD:Streamline-Exit/trunk/Streamline-Exit-Start/Assets/WaterCycleScreen.unity
+  m_IsTrigger: 0
+=======
   m_IsTrigger: 1
+>>>>>>> f55e5e3f2630b374507316add105fabd28a63f1e:Streamline-Exit/trunk/Streamline-Exit-Start/Assets/Scenes/WaterCycleScreen.unity
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -727,7 +747,11 @@ GameObject:
   - component: {fileID: 1450967728}
   m_Layer: 0
   m_Name: Change to Ice
+<<<<<<< HEAD:Streamline-Exit/trunk/Streamline-Exit-Start/Assets/WaterCycleScreen.unity
+  m_TagString: wet
+=======
   m_TagString: Wall
+>>>>>>> f55e5e3f2630b374507316add105fabd28a63f1e:Streamline-Exit/trunk/Streamline-Exit-Start/Assets/Scenes/WaterCycleScreen.unity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

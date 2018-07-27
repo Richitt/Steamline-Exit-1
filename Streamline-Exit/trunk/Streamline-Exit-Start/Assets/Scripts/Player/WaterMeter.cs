@@ -6,8 +6,8 @@ public class WaterMeter : MonoBehaviour
 {
     public Texture2D guage;
     public Texture2D filler;
-    public Vector2 pos = new Vector2(20, 40);
-    public Vector2 size = new Vector2(20, 60);
+    public Vector2 indicatorPos = new Vector2(20, 40);
+    public Vector2 indicatorSize = new Vector2(20, 60);
 
     public bool filling = false;
     [HideInInspector] public float amount = 50;
@@ -16,15 +16,18 @@ public class WaterMeter : MonoBehaviour
 
     private Collider2D vCollider;
     private Animator animator;
+    private ChangeState state;
 
-    const int SMALL = -1;
-    const int NORMAL = 0;
-    const int LARGE = 1;
+    public const int SMALL = -1;
+    public const int NORMAL = 0;
+    public const int LARGE = 1;
+    public int Size = 0;
 
     void Start()
     {
         vCollider = GetComponent<CircleCollider2D>();
         animator = GetComponent<Animator>();
+        state = GetComponent<ChangeState>();
     }
 
     void OnGUI()
@@ -38,42 +41,48 @@ public class WaterMeter : MonoBehaviour
           "You have killed Drate. You monster.");
         }
         // draw the background:
-        GUI.BeginGroup(new Rect(pos.x, pos.y, size.x, size.y));
-        GUI.Box(new Rect(0, 0, size.x, size.y), guage);
+        GUI.BeginGroup(new Rect(indicatorPos.x, indicatorPos.y, indicatorSize.x, indicatorSize.y));
+        GUI.Box(new Rect(0, 0, indicatorSize.x, indicatorSize.y), guage);
 
         // draw the filled-in part:
-        GUI.BeginGroup(new Rect(0, (size.y - (size.y * amount/100)), size.x, size.y * amount/100));
-        GUI.Box(new Rect(0, -size.y + (size.y * amount/100), size.x, size.y), filler);
+        GUI.BeginGroup(new Rect(0, (indicatorSize.y - (indicatorSize.y * amount/100)), indicatorSize.x, indicatorSize.y * amount/100));
+        GUI.Box(new Rect(0, -indicatorSize.y + (indicatorSize.y * amount/100), indicatorSize.x, indicatorSize.y), filler);
         GUI.EndGroup();
         GUI.EndGroup();
     }
     void Update()
     {
         //Either fill or empty the guage
-        if (filling && amount < 100)
+        switch (state.State)
         {
-            amount += fillSpeed;
+            case ChangeState.SOLID:
+                break;
+            case ChangeState.LIQUID:
+                // if filling get more water, if not filling lose water
+                amount += filling ? fillSpeed : -drainSpeed;
+                break;
+            case ChangeState.GAS:
+                // if filling stay constant, if not filling lose water
+                amount += filling ? 0 : -drainSpeed;
+                break;
         }
-        else if (!filling && amount>0)
-        {
-            amount -= drainSpeed;
-        }
-
-        //Check for boundaries in the percentages
         amount = Mathf.Clamp(amount, 0f, 100f);
 
-        // set animation
+        // set animation and size variable
         if (amount <= 30)
         {
             animator.SetInteger("Size", SMALL);
+            Size = SMALL;
         }
         else if (amount >= 60)
         {
             animator.SetInteger("Size", LARGE);
+            Size = LARGE;
         }
         else
         {
             animator.SetInteger("Size", NORMAL);
+            Size = NORMAL;
         }
     }
 

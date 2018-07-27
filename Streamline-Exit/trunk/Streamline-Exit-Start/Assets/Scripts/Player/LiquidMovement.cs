@@ -29,6 +29,8 @@ public class LiquidMovement : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update ()
     {
+        body.gravityScale = 0.5f;
+        body.drag = 0f;
         sr.flipX = false;
         bool grounded = Grounded();
 

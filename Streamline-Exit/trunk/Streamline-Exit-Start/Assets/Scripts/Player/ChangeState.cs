@@ -78,7 +78,7 @@ public class ChangeState : MonoBehaviour
                 movement = gameObject.AddComponent<LiquidMovement>();
                 break;
             case GAS:
-                // movement = gameObject.AddComponent<GasMovement>();
+                movement = gameObject.AddComponent<GasMovement>();
                 break;
             default:
                 throw new System.Exception("That's not a valid state. :frogs:");

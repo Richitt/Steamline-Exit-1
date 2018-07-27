@@ -15,7 +15,6 @@ public class liquidWalk : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        spr.sprite = sprites[frameToSelect];
 
     }
 }

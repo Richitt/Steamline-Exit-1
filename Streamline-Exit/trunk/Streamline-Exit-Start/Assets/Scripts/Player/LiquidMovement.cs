@@ -13,12 +13,14 @@ public class LiquidMovement : MonoBehaviour {
     private bool gasState;
     private bool liquidState;
     private bool solidState;
+    private Sprite[] gasSprites;
 
     private Collider2D vCollider;
     private ChangeState changeState;
 
     private void Awake()
     {
+        gasSprites = Resources.LoadAll<Sprite>("gasMode");
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         vCollider = GetComponent<CapsuleCollider2D>();
@@ -31,6 +33,11 @@ public class LiquidMovement : MonoBehaviour {
         bool grounded = Grounded();
         /////////////////////////////////////////
         //TODO: Debug Water State Changes
+        if (Input.GetKeyDown("space"))
+        {
+            Debug.Log("hit space");
+            gasState = true;
+        }
         if (Input.GetKeyDown("1"))
         {
             changeState.SetState(ChangeState.SOLID);
@@ -74,7 +81,29 @@ public class LiquidMovement : MonoBehaviour {
         animator.SetFloat("VelocityY", Mathf.Sign(body.velocity.y));
         animator.SetBool("Grounded", grounded);
     }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("hit wind");
+    }
+    void OnTriggerStay2D(Collider2D other)
+    {
+        //Debug.Log("hello");
+        string checkere = other.gameObject.name;
+        //Debug.Log(checkere);
+        if (checkere.Equals("WindUpBox") && gasState == true)
+        {
+            Debug.Log("hit it here boy");
+            Vector2 dir = new Vector2(0, 1);
+            GetComponent<Rigidbody2D>().AddForce(dir * 15);
+        }
+        if (checkere.Equals("ToasterMan"))
+        {
+            Debug.Log("hit the toast");
+            gasState = true;
+            GetComponent<SpriteRenderer>().sprite = gasSprites[0];
+        }
 
+    }
     public bool Grounded()
     {
         return CheckRaycastGround(Vector2.zero) ||
@@ -102,4 +131,20 @@ public class LiquidMovement : MonoBehaviour {
         }
         return false;
     }
+
 }
+
+
+
+//Vector3 colliderPointion = GetComponent<Collider2D>().transform.position;
+//Debug.Log(colliderPointion);
+//Vector3 position = transform.position;
+//Vector3 targetPosition = colliderPointion;
+//Vector3 direction = targetPosition - position;
+//Collider2D col = other;
+//other.attachedRigidbody.velocity = new Vector2(-1, -1);
+//Debug.Log(col.transform.position);
+//Debug.Log("here's the velocity " + col.attachedRigidbody.velocity);
+//direction.Normalize();
+//int moveSpeed = 10;
+//targetPosition += direction * moveSpeed * Time.deltaTime;

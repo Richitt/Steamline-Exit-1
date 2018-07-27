@@ -55,8 +55,32 @@ public class ChangeState : MonoBehaviour
         {
             SetState(GAS);
         }
-    }
 
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("hit wind");
+        string checkere = other.gameObject.name;
+        if (checkere.Equals("ToasterMan"))
+        {
+            Debug.Log("hit the toast");
+            SetState(GAS);
+        }
+        if (checkere.Equals("glacieSolid"))
+        {
+            SetState(SOLID);
+        }
+        if (checkere.Equals("glacieSolid2.0"))
+        {
+            SetState(SOLID);
+        }
+    }
+    void OnTriggerStay2D(Collider2D other)
+    {
+        //Debug.Log("hello");
+        string checkere = other.gameObject.name;
+        //Debug.Log(checkere);
+    }
     public void SetState(int state)
     {
         // remove old components. Make sure everything is a child of LiquidMovement or else this won't work

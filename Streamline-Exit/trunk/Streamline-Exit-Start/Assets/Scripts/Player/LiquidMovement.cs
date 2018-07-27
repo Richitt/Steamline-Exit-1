@@ -76,17 +76,7 @@ public class LiquidMovement : MonoBehaviour
 
             if (Input.GetKey("down"))
             {
-                if (gasState == false)
-                {
-                    if (solidState == true)
-                    {
-                        body.velocity = new Vector2(0, -25);
-                    }
-                    else
-                    {
-                        body.velocity = new Vector2(0, -jumpSpeed);
-                    }
-                }
+                Debug.Log("Nothing, you ain't an ice cube");
             }
             if (Input.GetKeyDown("up") && Jumpable())
             {

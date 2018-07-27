@@ -8,7 +8,7 @@ public class GasMovement : LiquidMovement
     protected override void Update()
     {
         // no gravity
-        body.gravityScale = 0f;
+        body.gravityScale = 0.3f;
         body.drag = 1f;
         // can't move if transition exists
         int hDirection = 0;
@@ -30,7 +30,7 @@ public class GasMovement : LiquidMovement
 
             if (Input.GetKey("down") && Movable())
             {
-                body.velocity = new Vector2(body.velocity.x, -horizontalSpeed);
+                Debug.Log("You're at the mercy of the wind sorry");
             }
             if (Input.GetKey("up") && Movable())
             {
@@ -64,6 +64,27 @@ public class GasMovement : LiquidMovement
         // set direction
         sr.flipX = facingX == 1;
     }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("hit wind");
+    }
+    void OnTriggerStay2D(Collider2D other)
+    {
+        //Debug.Log("hello");
+        string checkere = other.gameObject.name;
+        //Debug.Log(checkere);
+        if (checkere.Equals("WindUpBox"))
+        {
+            Debug.Log("hit it here boy");
+            Vector2 dir = new Vector2(0, 1);
+            GetComponent<Rigidbody2D>().AddForce(dir * 15);
+        }
+        if (checkere.Equals("WindUpBoxStrong"))
+        {
+            Vector2 dir = new Vector2(0, 1);
+            GetComponent<Rigidbody2D>().AddForce(dir * 50);
+        }
+    } 
 
     protected override bool Movable()
     {

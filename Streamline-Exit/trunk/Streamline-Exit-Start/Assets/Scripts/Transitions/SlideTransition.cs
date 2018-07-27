@@ -110,7 +110,6 @@ public class SlideTransition : SceneTransition
     // and also move the player to its new scene position if the player exists
     protected override void SceneChange(Scene scene, LoadSceneMode mode)
     {
-        Vector2 screenSize = new Vector2(Screen.width, Screen.height);
         state = State.OUT;
         // move the player
         GameObject player = GameObject.FindGameObjectWithTag("Player");

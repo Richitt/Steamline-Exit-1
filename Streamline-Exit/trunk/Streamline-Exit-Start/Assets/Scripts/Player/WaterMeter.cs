@@ -16,6 +16,7 @@ public class WaterMeter : MonoBehaviour
 
     private Collider2D vCollider;
     private Animator animator;
+    private ChangeState state;
 
     public const int SMALL = -1;
     public const int NORMAL = 0;
@@ -26,6 +27,7 @@ public class WaterMeter : MonoBehaviour
     {
         vCollider = GetComponent<CircleCollider2D>();
         animator = GetComponent<Animator>();
+        state = GetComponent<ChangeState>();
     }
 
     void OnGUI()
@@ -51,19 +53,22 @@ public class WaterMeter : MonoBehaviour
     void Update()
     {
         //Either fill or empty the guage
-        if (filling && amount < 100)
+        switch (state.State)
         {
-            amount += fillSpeed;
+            case ChangeState.SOLID:
+                break;
+            case ChangeState.LIQUID:
+                // if filling get more water, if not filling lose water
+                amount += filling ? fillSpeed : -drainSpeed;
+                break;
+            case ChangeState.GAS:
+                // if filling stay constant, if not filling lose water
+                amount += filling ? 0 : -drainSpeed;
+                break;
         }
-        else if (!filling && amount>0)
-        {
-            amount -= drainSpeed;
-        }
-
-        //Check for boundaries in the percentages
         amount = Mathf.Clamp(amount, 0f, 100f);
 
-        // set animation
+        // set animation and size variable
         if (amount <= 30)
         {
             animator.SetInteger("Size", SMALL);

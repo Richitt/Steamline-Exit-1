@@ -25,7 +25,6 @@ public class DoorBehavior : MonoBehaviour
             Vector2 direction = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector2(0.5f, 0.5f) * screenSize);
             // cardinally normalize the direction vector
             SceneTransitions.Side side = SceneTransitions.ToSide(direction);
-            Vector2Int cardinal = SceneTransitions.ToVector2Int(side);
             // go to the given scene in the map
             SceneTransition trans = SceneTransitions.Transition<SlideTransition>(new SceneTransitions.Time(1f, 0.25f, 1f), targetScene, targetPosition);
             trans.side = side;

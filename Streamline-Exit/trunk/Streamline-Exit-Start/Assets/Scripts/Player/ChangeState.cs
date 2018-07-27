@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,15 +9,35 @@ public class ChangeState : MonoBehaviour
     public const int LIQUID = 1;
     public const int GAS = 2;
 
-    public int State { get; private set; }
+    public int State = LIQUID;
 
     private Animator animator;
-    
+    private CinemachineVirtualCamera cam;
+
+    // make the player single
+    // oh wait we all already are
+    private static ChangeState Instance;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            Instance = this;
+            gameObject.tag = "Player";
+        }
+        else if (Instance != this)
+        {
+            cam = GameObject.FindGameObjectWithTag("Cinemachine").GetComponent<CinemachineVirtualCamera>();
+            cam.Follow = GameObject.FindGameObjectWithTag("Player").transform;
+            Destroy(gameObject);
+        }
+    }
+
     // Use this for initialization
     void Start ()
     {
         animator = GetComponent<Animator>();
-        State = 1;
+        SetState(State);
     }
 	
 	// Update is called once per frame
@@ -38,11 +59,6 @@ public class ChangeState : MonoBehaviour
 
     public void SetState(int state)
     {
-        if (State == state)
-        {
-            return;
-        }
-
         // remove old components. Make sure everything is a child of LiquidMovement or else this won't work
         LiquidMovement old = gameObject.GetComponent<LiquidMovement>();
         float horizontalSpeed = old.horizontalSpeed;

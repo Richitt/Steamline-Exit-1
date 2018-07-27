@@ -80,7 +80,7 @@ public class LiquidMovement : MonoBehaviour
             }
             if (Input.GetKeyDown("up") && Jumpable())
             {
-                body.velocity = new Vector2(body.velocity.x, jumpSpeed);
+                body.velocity = new Vector2(body.velocity.x+10, jumpSpeed);
             }
         }
         else

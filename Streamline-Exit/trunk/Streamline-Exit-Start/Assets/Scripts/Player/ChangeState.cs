@@ -74,6 +74,10 @@ public class ChangeState : MonoBehaviour
         {
             SetState(SOLID);
         }
+        if (checkere.Equals("SolidSnake"))
+        {
+            SetState(LIQUID);
+        }
     }
     void OnTriggerStay2D(Collider2D other)
     {

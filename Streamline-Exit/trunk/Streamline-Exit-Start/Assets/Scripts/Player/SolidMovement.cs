@@ -7,7 +7,7 @@ public class SolidMovement : LiquidMovement
     // Do the same thing as liquid, but we need to flip sprite when facing right
     protected override void Update()
     {
-        body.gravityScale = 1.5f;
+        body.gravityScale = 0.5f;
         body.drag = 0f;
         sr.flipX = false;
         //TODO: Debug Water State Changes
